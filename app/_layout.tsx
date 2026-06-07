@@ -1,22 +1,22 @@
-import { useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { Tabs } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
+import { useEffect } from "react";
+import { View, Text, StyleSheet } from "react-native";
+import { Tabs } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import {
   useFonts,
   Orbitron_400Regular,
   Orbitron_500Medium,
   Orbitron_700Bold,
-} from '@expo-google-fonts/orbitron';
+} from "@expo-google-fonts/orbitron";
 import {
   Exo2_400Regular,
   Exo2_500Medium,
   Exo2_600SemiBold,
   Exo2_700Bold,
   useFonts as useExoFonts,
-} from '@expo-google-fonts/exo-2';
-import * as SplashScreen from 'expo-splash-screen';
-import { Colors } from '@/constants/theme';
+} from "@expo-google-fonts/exo-2";
+import * as SplashScreen from "expo-splash-screen";
+import { Colors } from "@/constants/theme";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -65,22 +65,28 @@ export default function LayoutRaiz() {
         <Tabs.Screen
           name="index"
           options={{
-            title: 'CLIMA',
-            tabBarIcon: ({ focused }) => <IconeAba label="🌡️" ativo={focused} />,
+            title: "CLIMA",
+            tabBarIcon: ({ focused }) => (
+              <IconeAba label="🌡️" ativo={focused} />
+            ),
           }}
         />
         <Tabs.Screen
           name="alerts"
           options={{
-            title: 'ALERTAS',
-            tabBarIcon: ({ focused }) => <IconeAba label="⚠️" ativo={focused} />,
+            title: "ALERTAS",
+            tabBarIcon: ({ focused }) => (
+              <IconeAba label="⚠️" ativo={focused} />
+            ),
           }}
         />
         <Tabs.Screen
           name="about"
           options={{
-            title: 'MARTE',
-            tabBarIcon: ({ focused }) => <IconeAba label="🔴" ativo={focused} />,
+            title: "MARTE",
+            tabBarIcon: ({ focused }) => (
+              <IconeAba label="🔴" ativo={focused} />
+            ),
           }}
         />
 
@@ -101,15 +107,15 @@ const estilos = StyleSheet.create({
     backgroundColor: Colors.bg,
   },
   barraTabs: {
-    backgroundColor: '#0f0602',
-    borderTopColor: '#2a1608',
+    backgroundColor: "#0f0602",
+    borderTopColor: "#2a1608",
     borderTopWidth: 1,
-    height: 64,
-    paddingBottom: 10,
+    height: 85,
+    paddingBottom: 20,
     paddingTop: 6,
   },
   rotuloTab: {
-    fontFamily: 'Orbitron_400Regular',
+    fontFamily: "Orbitron_400Regular",
     fontSize: 8,
     letterSpacing: 1.5,
   },

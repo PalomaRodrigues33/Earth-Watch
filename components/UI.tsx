@@ -1,15 +1,19 @@
-import React from 'react';
+import React from "react";
 import {
   View,
   Text,
   ActivityIndicator,
   TouchableOpacity,
   ViewStyle,
-} from 'react-native';
-import { estilos } from '@/styles/ui.styles';
-import { Colors, Spacing, Radius, Typography } from '@/constants/theme';
+} from "react-native";
+import { estilos } from "@/styles/ui.styles";
+import { Colors, Spacing, Radius, Typography } from "@/constants/theme";
 
-export function LoadingScreen({ message = 'Carregando...' }: { message?: string }) {
+export function LoadingScreen({
+  message = "Carregando...",
+}: {
+  message?: string;
+}) {
   return (
     <View style={estilos.centralizado}>
       <ActivityIndicator size="large" color={Colors.amber} />
@@ -18,7 +22,13 @@ export function LoadingScreen({ message = 'Carregando...' }: { message?: string 
   );
 }
 
-export function ErrorScreen({ error, onRetry }: { error: string; onRetry?: () => void }) {
+export function ErrorScreen({
+  error,
+  onRetry,
+}: {
+  error: string;
+  onRetry?: () => void;
+}) {
   return (
     <View style={estilos.centralizado}>
       <Text style={estilos.iconeErro}>⚠</Text>
@@ -41,20 +51,37 @@ interface PropsStatCard {
   accent?: boolean;
 }
 
-export function StatCard({ label, value, unit, icon, style, accent }: PropsStatCard) {
+export function StatCard({
+  label,
+  value,
+  unit,
+  icon,
+  style,
+  accent,
+}: PropsStatCard) {
   return (
-    <View style={[estilos.cartaoStat, accent && estilos.cartaoStatDestaque, style]}>
+    <View
+      style={[estilos.cartaoStat, accent && estilos.cartaoStatDestaque, style]}
+    >
       {icon && <Text style={estilos.iconestat}>{icon}</Text>}
       <Text style={estilos.rotuloStat}>{label}</Text>
       <View style={estilos.linhaValorStat}>
-        <Text style={[estilos.valorStat, accent && estilos.valorStatDestaque]}>{value}</Text>
+        <Text style={[estilos.valorStat, accent && estilos.valorStatDestaque]}>
+          {value}
+        </Text>
         {unit && <Text style={estilos.unidadeStat}>{unit}</Text>}
       </View>
     </View>
   );
 }
 
-export function SectionHeader({ title, subtitle }: { title: string; subtitle?: string }) {
+export function SectionHeader({
+  title,
+  subtitle,
+}: {
+  title: string;
+  subtitle?: string;
+}) {
   return (
     <View style={estilos.cabecalhoSecao}>
       <View style={estilos.linhaSecao} />
@@ -96,8 +123,8 @@ export function TempBar({ min, max }: { min: number; max: number }) {
             estilos.preenchimentoBarra,
             {
               left: `${pctMin}%` as any,
-              width: `${larguraBarra}%` as any
-},
+              width: `${larguraBarra}%` as any,
+            },
           ]}
         />
       </View>

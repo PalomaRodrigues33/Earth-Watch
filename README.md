@@ -1,6 +1,6 @@
 # 🔴 Clima em Marte
 
-App React Native que exibe dados meteorológicos reais do rover Curiosity da NASA em Marte.
+App React Native que exibe dados meteorológicos simulados e reais do rover Curiosity da NASA em Marte.
 
 ## Funcionalidades
 
@@ -36,15 +36,6 @@ npx expo start
 
 Escaneie o QR code com o Expo Go para abrir no celular.
 
-### Imagem de Fundo
-
-Substitua o arquivo `assets/mars_bg.jpg` por qualquer foto de Marte de sua preferência.  
-Sugestão: [Galeria de imagens da NASA](https://mars.nasa.gov/multimedia/images/)
-
-Após trocar a imagem:
-```bash
-npx expo start --clear
-```
 
 ## Estrutura do Projeto
 

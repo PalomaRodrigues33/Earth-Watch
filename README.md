@@ -10,7 +10,39 @@ App React Native que exibe dados meteorológicos simulados e reais do rover Curi
 | **Alertas** | Alertas simulados de impactos meteóricos com níveis de criticidade (dados mockados) |
 | **Marte** | Curiosidades sobre o planeta, histórico de missões, glossário de termos e fonte dos dados |
 
-A tela de Clima também dá acesso ao **Histórico de Sols** — os últimos 7 dias marcianos registrados pelo REMS.
+A tela de Clima também dá acesso ao **Histórico de Sóis** — os últimos 7 dias marcianos registrados pelo REMS.
+
+### Telas
+
+<details>
+<summary>🌡️ Clima</summary>
+
+![Clima](./telas/1clima.png)
+
+</details>
+
+<details>
+<summary>📊 Histórico de Sóis</summary>
+
+![Histórico](./telas/2historico.png)
+
+</details>
+
+<details>
+<summary>⚠️ Alertas</summary>
+
+![Alertas](./telas/3alertas.png)
+
+</details>
+
+<details>
+<summary>🔴 Marte</summary>
+
+![Marte](./telas/4sobre.png)
+
+</details>
+
+</details>
 
 ## Fonte dos Dados
 
@@ -46,7 +78,7 @@ MarsWeather/
 │   ├── index.tsx          # Tela: Clima
 │   ├── alerts.tsx         # Tela: Alertas
 │   ├── about.tsx          # Tela: Marte
-│   └── history.tsx        # Tela: Histórico de Sols
+│   └── history.tsx        # Tela: Histórico de Sóis
 ├── components/
 │   └── UI.tsx             # Componentes reutilizáveis
 ├── styles/

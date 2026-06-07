@@ -1,8 +1,3 @@
-// Tela de Alertas Meteóricos
-// Dados simulados seguindo o modelo T_GS_ALERTA do diagrama de banco de dados.
-// Campos: ID_ALERTA, DESCRICAO, NIVEL_CRITICO, AREA_IMPACTO_KM, LOCAL_ORIGEM
-// Relação: cada alerta possui FK para T_GS_LEITURA_SENSOR (ID_LEITURA, COORDENADA_X, COORDENADA_Y)
-
 import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
@@ -18,8 +13,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Divider } from '@/components/UI';
 import { Colors, Spacing, Radius, Typography } from '@/constants/theme';
 
-// ── Tipos (baseado no modelo T_GS_ALERTA) ────────────────────────────────────
-
 type NivelCritico = 'BAIXO' | 'MODERADO' | 'ALTO' | 'CRÍTICO';
 
 interface Alerta {
@@ -34,7 +27,7 @@ interface Alerta {
   coordenada_y: number;
 }
 
-// ── Dados simulados (T_GS_ALERTA) ────────────────────────────────────────────
+// dados simulados
 
 const ALERTAS: Alerta[] = [
   {
@@ -105,16 +98,12 @@ const ALERTAS: Alerta[] = [
 },
 ];
 
-// ── Configuração visual por nível ─────────────────────────────────────────────
-
 const CONFIG_NIVEL: Record<NivelCritico, { cor: string; fundo: string; borda: string }> = {
   CRÍTICO:  { cor: '#ff3b30', fundo: '#2a0505', borda: '#ff3b30' },
   ALTO:     { cor: '#ff9500', fundo: '#2a1500', borda: '#ff9500' },
   MODERADO: { cor: '#ffd60a', fundo: '#1a1800', borda: '#ffd60a' },
   BAIXO:    { cor: '#30d158', fundo: '#051a0a', borda: '#30d158' }
 };
-
-// ── Funções auxiliares ────────────────────────────────────────────────────────
 
 function formatarDataHora(iso: string): string {
   const d = new Date(iso);
@@ -132,8 +121,6 @@ function tempoRelativo(iso: string): string {
   return `${Math.floor(diff / 86400)}d atrás`;
 }
 
-// ── Componente: ponto pulsante ────────────────────────────────────────────────
-
 function PontoPulsante({ cor }: { cor: string }) {
   const anim = useRef(new Animated.Value(1)).current;
   useEffect(() => {
@@ -146,8 +133,6 @@ function PontoPulsante({ cor }: { cor: string }) {
   }, []);
   return <Animated.View style={[estilos.pontoPulsante, { backgroundColor: cor, opacity: anim }]} />;
 }
-
-// ── Componente: cartão de alerta ──────────────────────────────────────────────
 
 function CartaoAlerta({ alerta, aoTocar }: { alerta: Alerta; aoTocar: () => void }) {
   const cfg = CONFIG_NIVEL[alerta.nivel_critico];
@@ -190,8 +175,6 @@ function CartaoAlerta({ alerta, aoTocar }: { alerta: Alerta; aoTocar: () => void
     </TouchableOpacity>
   );
 }
-
-// ── Componente: modal de detalhes ─────────────────────────────────────────────
 
 function ModalAlerta({ alerta, aoFechar }: { alerta: Alerta; aoFechar: () => void }) {
   const cfg = CONFIG_NIVEL[alerta.nivel_critico];
@@ -241,8 +224,6 @@ function LinhaModal({ rotulo, valor }: { rotulo: string; valor: string }) {
   );
 }
 
-// ── Tela principal ────────────────────────────────────────────────────────────
-
 type Filtro = 'TODOS' | NivelCritico;
 
 export default function TelaAlertas() {
@@ -270,7 +251,6 @@ export default function TelaAlertas() {
         contentContainerStyle={estilos.conteudo}
         showsVerticalScrollIndicator={false}
       >
-        {/* Cabeçalho */}
         <View style={estilos.cabecalho}>
           <View>
             <Text style={estilos.titulo}>ALERTAS</Text>
@@ -285,8 +265,6 @@ export default function TelaAlertas() {
             </View>
           )}
         </View>
-
-        {/* Estatísticas */}
         <View style={estilos.linhaStats}>
           {[
             { valor: ALERTAS.length,                                          rotulo: 'TOTAL',    cor: Colors.textPrimary },
@@ -301,8 +279,6 @@ export default function TelaAlertas() {
         </View>
 
         <Divider />
-
-        {/* Filtros */}
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -331,7 +307,6 @@ export default function TelaAlertas() {
           })}
         </ScrollView>
 
-        {/* Lista de alertas */}
         <View style={estilos.listaAlertas}>
           {alertasFiltrados.length === 0 ? (
             <View style={estilos.estadoVazio}>

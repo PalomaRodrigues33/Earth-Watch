@@ -1,4 +1,4 @@
-// Tela Marte — curiosidades, missões, glossário e fonte dos dados
+// tela com dados sobre marte
 
 import React, { useState } from 'react';
 import {
@@ -13,7 +13,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Divider, SectionHeader } from '@/components/UI';
 import { Colors, Spacing, Radius, Typography } from '@/constants/theme';
 
-// ── Dados ─────────────────────────────────────────────────────────────────────
+// dados
 
 const CURIOSIDADES = [
   { emoji: '🏔', label: 'Olympus Mons',       valor: '21,9 km de altura — maior vulcão do sistema solar' },
@@ -97,8 +97,6 @@ const GLOSSARIO = [
 },
 ];
 
-// ── Tela ──────────────────────────────────────────────────────────────────────
-
 export default function TelaMarte() {
   const [termoExpandido, setTermoExpandido] = useState<string | null>(null);
 
@@ -109,7 +107,6 @@ export default function TelaMarte() {
         contentContainerStyle={estilos.conteudo}
         showsVerticalScrollIndicator={false}
       >
-        {/* Cabeçalho */}
         <View style={estilos.cabecalho}>
           <View style={estilos.containerOrb}>
             <View style={estilos.orbMarte} />
@@ -119,15 +116,14 @@ export default function TelaMarte() {
             <Text style={estilos.titulo}>MARTE</Text>
             <Text style={estilos.subtitulo}>O Planeta Vermelho</Text>
             <Text style={estilos.descricao}>
-              O quarto planeta a partir do Sol. Um mundo desértico, frio e empoeirado,
-              com atmosfera fina — e o planeta mais explorado além da Terra.
+              O quarto planeta a partir do Sol. Um lugar desértico, frio e empoeirado,
+              com atmosfera fina, sendo o planeta mais explorado além da Terra.
             </Text>
           </View>
         </View>
 
         <Divider />
 
-        {/* Curiosidades */}
         <SectionHeader title="Curiosidades" />
         <View style={estilos.gradeCuriosidades}>
           {CURIOSIDADES.map((item) => (
@@ -141,7 +137,6 @@ export default function TelaMarte() {
 
         <Divider />
 
-        {/* Missões */}
         <SectionHeader
           title="Missões na Superfície"
           subtitle="Rovers e sondas passados e presentes"
@@ -167,7 +162,6 @@ export default function TelaMarte() {
 
         <Divider />
 
-        {/* Glossário */}
         <SectionHeader title="Glossário" subtitle="Toque para expandir" />
         {GLOSSARIO.map((item) => (
           <TouchableOpacity
@@ -190,7 +184,6 @@ export default function TelaMarte() {
 
         <Divider />
 
-        {/* Sobre o app */}
         <SectionHeader title="Sobre este App" />
         <View style={estilos.cartaoFonte}>
           <Text style={estilos.textoFonte}>

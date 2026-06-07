@@ -1,6 +1,3 @@
-// Tela de Histórico de Sols
-// Exibe os últimos 7 sols do rover Curiosity via NASA MSL API
-
 import React, { useEffect, useState, useCallback } from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import { estilos } from '@/styles/historico.styles';
@@ -45,7 +42,7 @@ export default function TelaHistorico() {
       >
         <View style={estilos.cabecalho}>
           <Text style={estilos.titulo}>HISTÓRICO DE SOLS</Text>
-          <Text style={estilos.subtitulo}>Últimos 7 dias marcianos · REMS Curiosity</Text>
+          <Text style={estilos.subtitulo}>Últimos 7 dias · REMS Curiosity</Text>
         </View>
 
         <Divider />
@@ -69,7 +66,7 @@ function CartaoSol({ sol }: { sol: SolWeather }) {
   const estacao = getMarsSeasonName(sol.ls);
   return (
     <View style={estilos.linhaSol}>
-      {/* Número do sol */}
+
       <View style={estilos.esquerdaSol}>
         <View style={estilos.badgeSol}>
           <Text style={estilos.rotuloNumeroSol}>SOL</Text>
@@ -77,12 +74,10 @@ function CartaoSol({ sol }: { sol: SolWeather }) {
         </View>
       </View>
 
-      {/* Dados centrais */}
       <View style={estilos.meioCentral}>
         <Text style={estilos.dataSol}>{formatEarthDate(sol.terrestrial_date)}</Text>
         <Text style={estilos.estacaoSol}>{estacao}</Text>
 
-        {/* Rótulos MÍN / MÁX sobre a barra */}
         <View style={estilos.linhaRotulosTemp}>
           <Text style={estilos.rotuloTemp}>MÍN</Text>
           <Text style={estilos.rotuloTemp}>MÁX</Text>
@@ -93,7 +88,6 @@ function CartaoSol({ sol }: { sol: SolWeather }) {
         </Text>
       </View>
 
-      {/* Dados laterais direitos */}
       <View style={estilos.direitaSol}>
         <View style={estilos.chipSol}>
           <Text style={estilos.textoChipSol}>{sol.atmo_opacity}</Text>

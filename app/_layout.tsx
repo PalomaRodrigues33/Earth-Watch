@@ -83,7 +83,7 @@ export default function LayoutRaiz() {
             tabBarIcon: ({ focused }) => <IconeAba label="🔴" ativo={focused} />,
           }}
         />
-        {/* Aba oculta — acessível via botão na tela de Clima */}
+
         <Tabs.Screen
           name="history"
           options={{

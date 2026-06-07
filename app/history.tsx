@@ -22,7 +22,7 @@ export default function TelaHistorico() {
       const recentes = await fetchRecentSols(7);
       setSols(recentes);
     } catch (e: any) {
-      setErro(e.message ?? 'Falha ao carregar histórico de sols');
+      setErro(e.message ?? 'Falha ao carregar histórico de sóis');
     } finally {
       setCarregando(false);
     }
@@ -30,7 +30,7 @@ export default function TelaHistorico() {
 
   useEffect(() => { carregar(); }, [carregar]);
 
-  if (carregando) return <LoadingScreen message="Baixando arquivo de sols..." />;
+  if (carregando) return <LoadingScreen message="Baixando arquivo de sóis..." />;
   if (erro) return <ErrorScreen error={erro} onRetry={() => { setCarregando(true); carregar(); }} />;
 
   return (
@@ -41,7 +41,7 @@ export default function TelaHistorico() {
         showsVerticalScrollIndicator={false}
       >
         <View style={estilos.cabecalho}>
-          <Text style={estilos.titulo}>HISTÓRICO DE SOLS</Text>
+          <Text style={estilos.titulo}>HISTÓRICO DE SÓIS</Text>
           <Text style={estilos.subtitulo}>Últimos 7 dias · REMS Curiosity</Text>
         </View>
 

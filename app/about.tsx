@@ -154,7 +154,7 @@ export default function TelaMarte() {
             <View style={estilos.metaRover}>
               <Text style={estilos.itemMetaRover}>📅 Pousou em {rover.pouso}</Text>
               <Text style={estilos.itemMetaRover}>📍 {rover.local}</Text>
-              <Text style={estilos.itemMetaRover}>🔢 {rover.solsEmMarte} sols em Marte</Text>
+              <Text style={estilos.itemMetaRover}>🔢 {rover.solsEmMarte} sóis em Marte</Text>
             </View>
             <Text style={estilos.missaoRover}>{rover.missao}</Text>
           </View>

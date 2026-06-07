@@ -244,7 +244,7 @@ export default function TelaClima() {
             <View style={estilos.botaoSolsConteudo}>
               <Text style={estilos.botaoSolsIcone}>📡</Text>
               <View style={estilos.botaoSolsTextos}>
-                <Text style={estilos.botaoSolsTitulo}>HISTÓRICO DE SOLS</Text>
+                <Text style={estilos.botaoSolsTitulo}>HISTÓRICO DE SÓIS</Text>
                 <Text style={estilos.botaoSolsSub}>
                   Ver os últimos 7 dias marcianos
                 </Text>

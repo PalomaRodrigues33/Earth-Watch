@@ -1,6 +1,3 @@
-// Componentes reutilizáveis de interface
-// Usados em todas as telas do app
-
 import React from 'react';
 import {
   View,
@@ -12,8 +9,6 @@ import {
 import { estilos } from '@/styles/ui.styles';
 import { Colors, Spacing, Radius, Typography } from '@/constants/theme';
 
-// ── Tela de carregamento ──────────────────────────────────────────────────────
-
 export function LoadingScreen({ message = 'Carregando...' }: { message?: string }) {
   return (
     <View style={estilos.centralizado}>
@@ -22,8 +17,6 @@ export function LoadingScreen({ message = 'Carregando...' }: { message?: string 
     </View>
   );
 }
-
-// ── Tela de erro ──────────────────────────────────────────────────────────────
 
 export function ErrorScreen({ error, onRetry }: { error: string; onRetry?: () => void }) {
   return (
@@ -39,9 +32,6 @@ export function ErrorScreen({ error, onRetry }: { error: string; onRetry?: () =>
     </View>
   );
 }
-
-// ── Cartão de estatística ─────────────────────────────────────────────────────
-
 interface PropsStatCard {
   label: string;
   value: string;
@@ -64,8 +54,6 @@ export function StatCard({ label, value, unit, icon, style, accent }: PropsStatC
   );
 }
 
-// ── Cabeçalho de seção ────────────────────────────────────────────────────────
-
 export function SectionHeader({ title, subtitle }: { title: string; subtitle?: string }) {
   return (
     <View style={estilos.cabecalhoSecao}>
@@ -78,13 +66,9 @@ export function SectionHeader({ title, subtitle }: { title: string; subtitle?: s
   );
 }
 
-// ── Divisor ───────────────────────────────────────────────────────────────────
-
 export function Divider({ style }: { style?: ViewStyle }) {
   return <View style={[estilos.divisor, style]} />;
 }
-
-// ── Etiqueta / Badge ──────────────────────────────────────────────────────────
 
 export function Tag({ label, color }: { label: string; color?: string }) {
   return (
@@ -93,9 +77,6 @@ export function Tag({ label, color }: { label: string; color?: string }) {
     </View>
   );
 }
-
-// ── Barra de temperatura ──────────────────────────────────────────────────────
-// Representa visualmente o intervalo MÍN-MÁX dentro da escala de Marte (-100°C a +20°C)
 
 export function TempBar({ min, max }: { min: number; max: number }) {
   const ESCALA_MIN = -100;

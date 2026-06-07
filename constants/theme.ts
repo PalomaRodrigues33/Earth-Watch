@@ -1,14 +1,10 @@
-// Tokens de design — paleta marciana
-// Cores, espaçamentos, raios de borda e fontes usados em todo o app
-
 export const Colors = {
-  // Fundos
+  // fundos
   bg:          '#0a0400',
   bgCard:      '#140a02',
   bgElevated:  '#1e1005',
   bgSubtle:    '#2a1608',
 
-  // Vermelhos e laranjas marcianos
   rust:        '#c1440e',
   rustLight:   '#e05c22',
   amber:       '#e8871a',
@@ -16,19 +12,16 @@ export const Colors = {
   dust:        '#b87040',
   dustLight:   '#d4956a',
 
-  // Texto
   textPrimary:   '#f5e6d0',
   textSecondary: '#a07858',
   textMuted:     '#664830',
   textAccent:    '#e8871a',
 
-  // Utilitários
   border:       '#2a1608',
   borderAccent: '#c1440e',
   success:      '#7ab648',
   danger:       '#e03030',
 
-  // Barra de abas
   tabActive:   '#e8871a',
   tabInactive: '#664830',
 };
@@ -51,7 +44,7 @@ export const Radius = {
 };
 
 export const Typography = {
-  // Fontes carregadas via @expo-google-fonts
+  // fontes - @expo-google-fonts
   display:      'Orbitron_700Bold',
   displayMedium:'Orbitron_500Medium',
   body:         'Exo2_400Regular',

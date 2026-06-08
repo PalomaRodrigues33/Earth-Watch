@@ -21,13 +21,6 @@ App React Native de previsão do tempo com alertas de meteoros.
 </details>
 
 <details>
-<summary>📊 Histórico de Sóis</summary>
-
-![Histórico](./telas/2historico.png)
-
-</details>
-
-<details>
 <summary>⚠️ Alertas</summary>
 
 ![Alertas](./telas/3alertas.png)
@@ -35,7 +28,7 @@ App React Native de previsão do tempo com alertas de meteoros.
 </details>
 
 <details>
-<summary>🔴 Marte</summary>
+<summary>📖 Sobre</summary>
 
 ![Marte](./telas/4sobre.png)
 

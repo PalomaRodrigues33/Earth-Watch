@@ -1,31 +1,38 @@
 export const Colors = {
-  // fundos
-  bg:          '#0a0400',
-  bgCard:      '#140a02',
-  bgElevated:  '#1e1005',
-  bgSubtle:    '#2a1608',
 
-  rust:        '#c1440e',
-  rustLight:   '#e05c22',
-  amber:       '#e8871a',
-  amberLight:  '#f5aa45',
-  dust:        '#b87040',
-  dustLight:   '#d4956a',
+  bg:          '#010d1a',
+  bgCard:      '#031628',
+  bgElevated:  '#062035',
+  bgSubtle:    '#0a2d47',
+ 
+  primary:     '#1565c0',
+  primaryLight:'#1e88e5',
+  accent:      '#29b6f6',
+  accentLight: '#81d4fa',
+  sky:         '#0288d1',
+  skyLight:    '#4fc3f7',
+ 
+  rust:        '#1565c0',
+  rustLight:   '#1e88e5',
+  amber:       '#29b6f6',
+  amberLight:  '#81d4fa',
+  dust:        '#1976d2',
+  dustLight:   '#64b5f6',
 
-  textPrimary:   '#f5e6d0',
-  textSecondary: '#a07858',
-  textMuted:     '#664830',
-  textAccent:    '#e8871a',
-
-  border:       '#2a1608',
-  borderAccent: '#c1440e',
-  success:      '#7ab648',
-  danger:       '#e03030',
-
-  tabActive:   '#e8871a',
-  tabInactive: '#664830',
+  textPrimary:   '#e8f4fd',
+  textSecondary: '#7eb8d4',
+  textMuted:     '#3a6d8c',
+  textAccent:    '#29b6f6',
+ 
+  border:       '#0a2d47',
+  borderAccent: '#1565c0',
+  success:      '#66bb6a',
+  danger:       '#ef5350',
+ 
+  tabActive:   '#29b6f6',
+  tabInactive: '#3a6d8c',
 };
-
+ 
 export const Spacing = {
   xs:  4,
   sm:  8,
@@ -34,7 +41,7 @@ export const Spacing = {
   xl:  32,
   xxl: 48,
 };
-
+ 
 export const Radius = {
   sm:   6,
   md:   12,

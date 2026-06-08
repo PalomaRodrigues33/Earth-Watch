@@ -14,7 +14,6 @@ import { Divider } from '@/components/UI';
 import { Colors, Spacing, Radius, Typography } from '@/constants/theme';
 
 type NivelCritico = 'BAIXO' | 'MODERADO' | 'ALTO' | 'CRÍTICO';
-
 interface Alerta {
   id_alerta: number;
   descricao: string;
@@ -32,7 +31,7 @@ interface Alerta {
 const ALERTAS: Alerta[] = [
   {
     id_alerta: 1001,
-    descricao: 'Impacto de meteorito detectado próximo à Cratera Gale. Fragmentos secundários registrados em raio de 12 km.',
+    descricao: 'Meteorito de grande porte detectado em trajetória de impacto com a superfície terrestre. Fragmentos secundários esperados em raio de 12 km.',
     nivel_critico: 'CRÍTICO',
     area_impacto_km: 47.3,
     local_origem: 'Cinturão de Asteroides',
@@ -43,7 +42,7 @@ const ALERTAS: Alerta[] = [
 },
   {
     id_alerta: 1002,
-    descricao: 'Enxame meteorítico de baixa massa detectado em trajetória de impacto com a Planície de Elísio.',
+    descricao: 'Enxame meteorítico de baixa massa detectado em trajetória de impacto com a região do Atlântico Sul.',
     nivel_critico: 'ALTO',
     area_impacto_km: 18.9,
     local_origem: 'Cometa C/2024 R1',
@@ -54,7 +53,7 @@ const ALERTAS: Alerta[] = [
 },
   {
     id_alerta: 1003,
-    descricao: 'Meteorito de pequeno porte com área de impacto estimada. Sem risco para equipamentos de superfície.',
+    descricao: 'Meteorito de pequeno porte com área de impacto estimada. Sem risco para populações nas proximidades.',
     nivel_critico: 'MODERADO',
     area_impacto_km: 5.2,
     local_origem: 'Cinturão de Asteroides',
@@ -65,7 +64,7 @@ const ALERTAS: Alerta[] = [
 },
   {
     id_alerta: 1004,
-    descricao: 'Partícula meteórica de microescala registrada pelos sensores REMS. Poeira adicional suspensa na atmosfera.',
+    descricao: 'Partícula meteórica de microescala registrada pela rede de sensores. Incremento mínimo de poeira na atmosfera superior.',
     nivel_critico: 'BAIXO',
     area_impacto_km: 0.3,
     local_origem: 'Fluxo Perseídas Marcianas',
@@ -76,7 +75,7 @@ const ALERTAS: Alerta[] = [
 },
   {
     id_alerta: 1005,
-    descricao: 'Bolide detectado na termosfera marciana. Desintegração completa antes do impacto com a superfície.',
+    descricao: 'Bolide detectado na termosfera terrestre. Desintegração completa antes do impacto com a superfície.',
     nivel_critico: 'MODERADO',
     area_impacto_km: 8.7,
     local_origem: 'Desconhecida',
@@ -87,7 +86,7 @@ const ALERTAS: Alerta[] = [
 },
   {
     id_alerta: 1006,
-    descricao: 'Impacto de alta energia registrado em Vastitas Borealis. Possível ejeção de material subsuperficial.',
+    descricao: 'Impacto de alta energia registrado no Oceano Índico. Possível geração de ondas de pressão atmosférica.',
     nivel_critico: 'ALTO',
     area_impacto_km: 31.4,
     local_origem: 'Cinturão de Asteroides',

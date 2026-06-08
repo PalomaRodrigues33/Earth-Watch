@@ -83,9 +83,9 @@ export default function LayoutRaiz() {
         <Tabs.Screen
           name="about"
           options={{
-            title: "MARTE",
+            title: "SOBRE",
             tabBarIcon: ({ focused }) => (
-              <IconeAba label="🔴" ativo={focused} />
+              <IconeAba label="📖" ativo={focused} />
             ),
           }}
         />

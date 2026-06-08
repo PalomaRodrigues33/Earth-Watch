@@ -1,16 +1,15 @@
-# 🔴 Clima em Marte
+# Clima
 
-App React Native que exibe dados meteorológicos simulados e reais do rover Curiosity da NASA em Marte.
+App React Native de previsão do tempo com alertas de meteoros.
+
 
 ## Funcionalidades
 
 | Tela | Conteúdo |
 |------|----------|
-| **Clima** | Sol atual, hora local em Marte (ao vivo), temperatura mín/máx, pressão, UV, nascer/pôr do sol, atmosfera |
-| **Alertas** | Alertas simulados de impactos meteóricos com níveis de criticidade (dados mockados) |
-| **Marte** | Curiosidades sobre o planeta, histórico de missões, glossário de termos e fonte dos dados |
-
-A tela de Clima também dá acesso ao **Histórico de Sóis** — os últimos 7 dias marcianos registrados pelo REMS.
+| **Clima** | Busca por cidade, temperatura, condições atuais, previsão de 7 dias |
+| **Alertas** | Alertas simulados de impactos meteóricos por nível de criticidade |
+| **Sobre** | Glossário com 11 termos meteorológicos explicados |
 
 ### Telas
 
@@ -46,11 +45,9 @@ A tela de Clima também dá acesso ao **Histórico de Sóis** — os últimos 7 
 
 ## Fonte dos Dados
 
-API oficial da NASA: `https://mars.nasa.gov/rss/api/?feed=weather&category=msl&feedtype=json`
-
-Os dados vêm do instrumento **REMS** (Rover Environmental Monitoring Station) do Curiosity, localizado na Cratera Gale (137,4°E), e são atualizados periodicamente conforme transmissões do rover para a Terra. Não é necessária chave de API.
-
-> Os dados de alertas meteóricos são **simulados** seguindo o modelo de banco de dados do projeto.
+- **Clima:** [Open-Meteo](https://open-meteo.com) — gratuita, sem chave de API
+- **Geocoding:** Open-Meteo Geocoding API — converte nome de cidade em coordenadas
+- **Alertas:** Dados simulados (mockados)
 
 ## Como Rodar
 
@@ -72,27 +69,25 @@ Escaneie o QR code com o Expo Go para abrir no celular.
 ## Estrutura do Projeto
 
 ```
-MarsWeather/
+```
 ├── app/
-│   ├── _layout.tsx        # Layout raiz e barra de abas
-│   ├── index.tsx          # Tela: Clima
-│   ├── alerts.tsx         # Tela: Alertas
-│   ├── about.tsx          # Tela: Marte
-│   └── history.tsx        # Tela: Histórico de Sóis
+│   ├── _layout.tsx          # Layout raiz e barra de abas
+│   ├── index.tsx            # Tela: Clima
+│   ├── alerts.tsx           # Tela: Alertas
+│   ├── about.tsx            # Tela: Sobre / Glossário
+│   └── history.tsx          # Oculta (não usada)
 ├── components/
-│   └── UI.tsx             # Componentes reutilizáveis
+│   └── UI.tsx               # Componentes reutilizáveis
 ├── styles/
-│   ├── clima.styles.ts    # Estilos da tela Clima
-│   ├── alertas.styles.ts  # Estilos da tela Alertas
-│   ├── marte.styles.ts    # Estilos da tela Marte
-│   ├── historico.styles.ts# Estilos da tela Histórico
-│   └── ui.styles.ts       # Estilos dos componentes UI
+│   ├── clima.styles.ts
+│   ├── alertas.styles.ts
+│   ├── sobre.styles.ts
+│   ├── historico.styles.ts
+│   └── ui.styles.ts
 ├── services/
-│   └── maas2.ts           # Cliente da API NASA + funções auxiliares
+│   └── openmeteo.ts         # Cliente Open-Meteo + geocoding
 ├── constants/
-│   └── theme.ts           # Cores, tipografia e espaçamentos
-└── assets/
-    └── mars_bg.jpg        # Imagem de fundo (substituível)
+│   └── theme.ts             # Cores, tipografia, espaçamentos
 ```
 
 ## Tecnologias

@@ -38,8 +38,8 @@ App React Native de previsão do tempo com alertas de meteoros.
 
 ## Fonte dos Dados
 
-- **Clima:** [Open-Meteo](https://open-meteo.com) — gratuita, sem chave de API
-- **Geocoding:** Open-Meteo Geocoding API — converte nome de cidade em coordenadas
+- **Clima:** [Open-Meteo](https://open-meteo.com) - gratuita, sem chave de API
+- **Geocoding:** Open-Meteo Geocoding API - converte nome de cidade em coordenadas
 - **Alertas:** Dados simulados (mockados)
 
 ## Como Rodar
@@ -62,25 +62,24 @@ Escaneie o QR code com o Expo Go para abrir no celular.
 ## Estrutura do Projeto
 
 ```
-```
 ├── app/
-│   ├── _layout.tsx          # Layout raiz e barra de abas
-│   ├── index.tsx            # Tela: Clima
-│   ├── alerts.tsx           # Tela: Alertas
-│   ├── about.tsx            # Tela: Sobre / Glossário
-│   └── history.tsx          # Oculta (não usada)
+│   ├── _layout.tsx      
+│   ├── index.tsx         
+│   ├── alerts.tsx           
+│   ├── about.tsx           
+│   └── history.tsx        
 ├── components/
-│   └── UI.tsx               # Componentes reutilizáveis
+│   └── UI.tsx             
 ├── styles/
 │   ├── clima.styles.ts
 │   ├── alertas.styles.ts
-│   ├── sobre.styles.ts
+│   ├── marte.styles.ts
 │   ├── historico.styles.ts
 │   └── ui.styles.ts
 ├── services/
-│   └── openmeteo.ts         # Cliente Open-Meteo + geocoding
+│   └── openmeteo.ts       
 ├── constants/
-│   └── theme.ts             # Cores, tipografia, espaçamentos
+│   └── theme.ts     
 ```
 
 ## Tecnologias

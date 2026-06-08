@@ -1,4 +1,4 @@
-// tela com dados sobre marte
+// tela com glossário de metereologia
 
 import React, { useState } from 'react';
 import {
@@ -6,98 +6,83 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
-  Linking,
 } from 'react-native';
-import { estilos } from '@/styles/marte.styles';
+import { estilos } from '@/styles/sobre.styles';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Divider, SectionHeader } from '@/components/UI';
-import { Colors, Spacing, Radius, Typography } from '@/constants/theme';
 
 // dados
 
-const CURIOSIDADES = [
-  { emoji: '🏔', label: 'Olympus Mons',       valor: '21,9 km de altura — maior vulcão do sistema solar' },
-  { emoji: '🕳', label: 'Valles Marineris',   valor: 'Sistema de cânions com 4.000 km de extensão' },
-  { emoji: '❄',  label: 'Calotas Polares',    valor: 'Compostas de gelo d\'água e gelo seco (CO₂)' },
-  { emoji: '🌡', label: 'Temperatura',        valor: '−125°C (polos) a +20°C (equador ao meio-dia)' },
-  { emoji: '📅', label: 'Ano Marciano',       valor: '687 dias terrestres de duração' },
-  { emoji: '🌙', label: 'Luas',               valor: 'Fobos e Deimos — ambos são asteroides capturados' },
-  { emoji: '🌬', label: 'Atmosfera',          valor: '95% CO₂, 2,6% N₂, 1,9% Argônio, traços de O₂' },
-  { emoji: '☀',  label: 'Distância do Sol',   valor: '228 milhões de km (1,52 UA)' },
-  { emoji: '🚀', label: 'Atraso de Sinal',    valor: '3–22 minutos de ida, dependendo da posição orbital' },
-];
-
-const ROVERS = [
-  {
-    nome: 'Curiosity',
-    status: 'ATIVO',
-    corStatus: Colors.success,
-    pouso: '6 de agosto de 2012',
-    local: 'Cratera Gale',
-    missao: 'Astrobiologia — estuda habitabilidade, clima e geologia. Ainda em operação após 13+ anos.',
-    solsEmMarte: '4600+'
-},
-  {
-    nome: 'Perseverance',
-    status: 'ATIVO',
-    corStatus: Colors.success,
-    pouso: '18 de fevereiro de 2021',
-    local: 'Cratera Jezero',
-    missao: 'Busca sinais de vida microbiana antiga. Coleta amostras para futura missão de retorno à Terra.',
-    solsEmMarte: '1800+'
-},
-  {
-    nome: 'InSight',
-    status: 'ENCERRADO',
-    corStatus: Colors.textMuted,
-    pouso: '26 de novembro de 2018',
-    local: 'Planície de Elísio',
-    missao: 'Exploração do interior marciano — sismologia, fluxo de calor e rotação. Perdeu energia em dezembro de 2022.',
-    solsEmMarte: '1445'
-},
-  {
-    nome: 'Opportunity',
-    status: 'ENCERRADO',
-    corStatus: Colors.textMuted,
-    pouso: '25 de janeiro de 2004',
-    local: 'Meridiani Planum',
-    missao: 'Geologia de superfície. Operou por 15 anos — muito além dos 90 dias previstos no projeto.',
-    solsEmMarte: '5111'
-},
-];
-
 const GLOSSARIO = [
   {
-    termo: 'Sol',
-    definicao: 'Um dia solar marciano. Um Sol dura 24 horas, 39 minutos e 35 segundos — cerca de 2,7% mais longo que um dia terrestre.'
-},
+    termo: 'Temperatura',
+    icone: '🌡',
+    definicao: 'Medida do calor do ar em graus Celsius (°C). A temperatura do ar é medida a 2 metros acima da superfície, em abrigo ventilado e protegido da radiação solar direta.',
+    exemplo: 'Valores típicos: −20°C (inverno frio) a +45°C (verão extremo).',
+  },
   {
-    termo: 'REMS',
-    definicao: 'Estação de Monitoramento Ambiental do Rover. O conjunto de instrumentos do Curiosity que mede temperatura, pressão, radiação UV, velocidade do vento e umidade.'
-},
+    termo: 'Sensação Térmica',
+    icone: '🧍',
+    definicao: 'Temperatura que o corpo humano percebe, levando em conta vento e umidade. Com vento forte ou umidade alta, a sensação pode ser bem diferente da temperatura real.',
+    exemplo: 'Temperatura 30°C com 90% de umidade → sensação de até 40°C.',
+  },
   {
-    termo: 'Ls — Longitude Solar',
-    definicao: 'O ângulo entre o Sol e Marte ao longo da órbita marciana. Ls 0° = equinócio da Primavera do Norte. Usado para identificar a estação do ano em Marte.'
-},
+    termo: 'Pressão Atmosférica',
+    icone: '⬇',
+    definicao: 'Peso da coluna de ar acima de um ponto, medido em hPa (hectopascals). Pressão baixa geralmente indica mau tempo; pressão alta, tempo estável e ensolarado.',
+    exemplo: 'Valor médio ao nível do mar: 1013 hPa. Abaixo de 1000 hPa: instabilidade.',
+  },
   {
-    termo: 'Opacidade Atmosférica',
-    definicao: 'Quantidade de poeira suspensa na atmosfera marciana. "Sunny" indica céu limpo; maior opacidade significa mais poeira, que dispersa a luz solar e cria o famoso céu rosado.'
-},
+    termo: 'Umidade Relativa',
+    icone: '💧',
+    definicao: 'Percentual de vapor d\'água no ar em relação ao máximo que ele pode conter. Quanto mais próximo de 100%, mais saturado o ar está.',
+    exemplo: 'Abaixo de 30%: ar muito seco (risco à saúde). Acima de 80%: ar muito úmido.',
+  },
   {
-    termo: 'Planície de Elísio',
-    definicao: 'Grande planície vulcânica próxima ao equador de Marte. Foi o local de pouso da sonda InSight da NASA, que monitorou maremotos e clima até dezembro de 2022.'
-},
+    termo: 'Índice UV',
+    icone: '☀️',
+    definicao: 'Medida da intensidade da radiação ultravioleta do Sol. Determina o risco de queimaduras e danos à pele sem proteção solar adequada.',
+    exemplo: '0–2: Baixo · 3–5: Moderado · 6–7: Alto · 8–10: Muito Alto · 11+: Extremo.',
+  },
   {
-    termo: 'Cratera Gale',
-    definicao: 'Cratera de impacto com 154 km de largura onde o Curiosity pousou em 6 de agosto de 2012. Em seu centro fica o Monte Sharp (Aeolis Mons), que o Curiosity vem escalando desde então.'
-},
+    termo: 'Vento',
+    icone: '💨',
+    definicao: 'Movimento do ar de uma região de alta pressão para uma de baixa pressão. A velocidade é medida em km/h e a direção indica de onde o vento sopra.',
+    exemplo: 'Brisa: até 20 km/h. Vento forte: 50–60 km/h. Tempestade: acima de 90 km/h.',
+  },
   {
-    termo: 'Pascals (Pa)',
-    definicao: 'Unidade de pressão atmosférica. A atmosfera de Marte tem apenas ~0,6% da espessura da terrestre; a pressão típica na superfície é de 600–700 Pa, contra 101.325 Pa na Terra.'
-},
+    termo: 'Precipitação',
+    icone: '🌧',
+    definicao: 'Qualquer forma de água que cai da atmosfera: chuva, garoa, neve ou granizo. Medida em milímetros (mm), onde 1 mm = 1 litro por metro quadrado.',
+    exemplo: 'Chuva fraca: < 2,5 mm/h. Chuva forte: > 7,5 mm/h. Chuva muito forte: > 50 mm/h.',
+  },
+  {
+    termo: 'Visibilidade',
+    icone: '👁',
+    definicao: 'Distância máxima a que um objeto pode ser visto e identificado. Reduzida por neblina, fumaça, chuva intensa ou tempestade de areia.',
+    exemplo: 'Névoa: < 1 km. Neblina densa: < 200 m. Céu limpo: > 10 km.',
+  },
+  {
+    termo: 'Cobertura de Nuvens',
+    icone: '☁️',
+    definicao: 'Percentual do céu coberto por nuvens. Influencia diretamente a temperatura: nuvens bloqueiam a radiação solar durante o dia e retêm calor à noite.',
+    exemplo: '0–25%: céu limpo · 25–50%: poucas nuvens · 75–100%: nublado.',
+  },
+  {
+    termo: 'Probabilidade de Chuva',
+    icone: '🌂',
+    definicao: 'Porcentagem de chance de ocorrência de precipitação em determinado período. Calculada por modelos meteorológicos com base em dados atmosféricos.',
+    exemplo: 'Abaixo de 20%: improvável. Acima de 70%: chuva muito provável.',
+  },
+  {
+    termo: 'Código WMO',
+    icone: '📡',
+    definicao: 'Código numérico padronizado pela Organização Meteorológica Mundial (WMO) para descrever condições do tempo. Usado internacionalmente por serviços meteorológicos.',
+    exemplo: 'Código 0: céu limpo · Código 63: chuva moderada · Código 95: tempestade.',
+  },
 ];
 
-export default function TelaMarte() {
+export default function TelaSobre() {
   const [termoExpandido, setTermoExpandido] = useState<string | null>(null);
 
   return (
@@ -108,61 +93,16 @@ export default function TelaMarte() {
         showsVerticalScrollIndicator={false}
       >
         <View style={estilos.cabecalho}>
-          <View style={estilos.containerOrb}>
-            <View style={estilos.orbMarte} />
-            <View style={estilos.brilhoOrb} />
-          </View>
-          <View style={estilos.textoCabecalho}>
-            <Text style={estilos.titulo}>MARTE</Text>
-            <Text style={estilos.subtitulo}>O Planeta Vermelho</Text>
-            <Text style={estilos.descricao}>
-              O quarto planeta a partir do Sol. Um lugar desértico, frio e empoeirado,
-              com atmosfera fina, sendo o planeta mais explorado além da Terra.
-            </Text>
-          </View>
+          <Text style={estilos.titulo}>METEOROLOGIA</Text>
+          <Text style={estilos.subtitulo}>
+            Guia dos principais termos e grandezas meteorológicas utilizados neste aplicativo.
+            Toque em qualquer item para expandir.
+          </Text>
         </View>
 
         <Divider />
 
-        <SectionHeader title="Curiosidades" />
-        <View style={estilos.gradeCuriosidades}>
-          {CURIOSIDADES.map((item) => (
-            <View key={item.label} style={estilos.cartaoCuriosidade}>
-              <Text style={estilos.emojiCuriosidade}>{item.emoji}</Text>
-              <Text style={estilos.labelCuriosidade}>{item.label}</Text>
-              <Text style={estilos.valorCuriosidade}>{item.valor}</Text>
-            </View>
-          ))}
-        </View>
-
-        <Divider />
-
-        <SectionHeader
-          title="Missões na Superfície"
-          subtitle="Rovers e sondas passados e presentes"
-        />
-        {ROVERS.map((rover) => (
-          <View key={rover.nome} style={estilos.cartaoRover}>
-            <View style={estilos.cabecalhoRover}>
-              <Text style={estilos.nomeRover}>{rover.nome}</Text>
-              <View style={[estilos.chipStatus, { borderColor: rover.corStatus }]}>
-                <Text style={[estilos.textoStatus, { color: rover.corStatus }]}>
-                  {rover.status}
-                </Text>
-              </View>
-            </View>
-            <View style={estilos.metaRover}>
-              <Text style={estilos.itemMetaRover}>📅 Pousou em {rover.pouso}</Text>
-              <Text style={estilos.itemMetaRover}>📍 {rover.local}</Text>
-              <Text style={estilos.itemMetaRover}>🔢 {rover.solsEmMarte} sóis em Marte</Text>
-            </View>
-            <Text style={estilos.missaoRover}>{rover.missao}</Text>
-          </View>
-        ))}
-
-        <Divider />
-
-        <SectionHeader title="Glossário" subtitle="Toque para expandir" />
+        <SectionHeader title="Glossário" subtitle={`${GLOSSARIO.length} termos`} />
         {GLOSSARIO.map((item) => (
           <TouchableOpacity
             key={item.termo}
@@ -171,38 +111,37 @@ export default function TelaMarte() {
             activeOpacity={0.7}
           >
             <View style={estilos.linhaGlossario}>
-              <Text style={estilos.termoGlossario}>{item.termo}</Text>
+              <Text style={estilos.termoGlossario}>{item.icone}  {item.termo}</Text>
               <Text style={estilos.chevronGlossario}>
                 {termoExpandido === item.termo ? '▲' : '▼'}
               </Text>
             </View>
             {termoExpandido === item.termo && (
-              <Text style={estilos.definicaoGlossario}>{item.definicao}</Text>
+              <>
+                <Text style={estilos.definicaoGlossario}>{item.definicao}</Text>
+                {item.exemplo && (
+                  <Text style={estilos.exemploGlossario}>{item.exemplo}</Text>
+                )}
+              </>
             )}
           </TouchableOpacity>
         ))}
 
         <Divider />
 
-        <SectionHeader title="Sobre este App" />
-        <View style={estilos.cartaoFonte}>
+        <SectionHeader title="Fonte dos Dados" />
+        <View style={estilos.cardFonte}>
           <Text style={estilos.textoFonte}>
-            Os dados meteorológicos são fornecidos diretamente pela{' '}
-            <Text style={estilos.linkFonte}>API Oficial da NASA</Text>
-            {' '}(mars.nasa.gov), que agrega leituras do instrumento REMS do rover
-            Curiosity na Cratera Gale. Os dados são transmitidos para a Terra e
-            atualizados periodicamente.
+            Os dados meteorológicos são fornecidos pela{' '}
+            <Text style={{ color: '#f5aa45' }}>Open-Meteo</Text>
+            {' '}(open-meteo.com) — API gratuita e de código aberto, sem necessidade de chave.
+            Os modelos utilizados incluem dados do ECMWF, GFS, DWD e outros centros
+            meteorológicos globais, com atualização a cada hora.
           </Text>
-          <TouchableOpacity
-            onPress={() => Linking.openURL('https://mars.nasa.gov/msl/weather/')}
-            style={estilos.botaoLink}
-          >
-            <Text style={estilos.textoBotaoLink}>VER CLIMA EM MARTE NA NASA →</Text>
-          </TouchableOpacity>
         </View>
 
         <Text style={estilos.rodape}>
-          Clima em Marte · Dados da NASA Curiosity REMS
+          Clima · Open-Meteo · Dados globais atualizados a cada hora
         </Text>
       </ScrollView>
     </SafeAreaView>

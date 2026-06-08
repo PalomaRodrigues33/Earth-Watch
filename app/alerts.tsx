@@ -253,7 +253,7 @@ export default function TelaAlertas() {
         <View style={estilos.cabecalho}>
           <View>
             <Text style={estilos.titulo}>ALERTAS</Text>
-            <Text style={estilos.subtitulo}>Impactos Meteóricos em Marte</Text>
+            <Text style={estilos.subtitulo}>Impactos Meteóricos na Terra</Text>
           </View>
           {criticos.length > 0 && (
             <View style={estilos.bannerCritico}>

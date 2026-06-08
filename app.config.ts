@@ -2,11 +2,11 @@ import { ExpoConfig, ConfigContext } from 'expo/config';
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
-  name: 'Mars Weather',
-  slug: 'mars-weather',
+  name: 'EarthWatch',
+  slug: 'earthwatch',
   version: '1.0.0',
   orientation: 'portrait',
-  scheme: 'mars-weather',
+  scheme: 'earthwatch',
   userInterfaceStyle: 'dark',
   newArchEnabled: true,
   splash: {
@@ -14,13 +14,13 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   ios: {
     supportsTablet: true,
-    bundleIdentifier: 'com.yourname.marsweather',
+    bundleIdentifier: 'com.yourname.earthwatch',
   },
   android: {
     adaptiveIcon: {
       backgroundColor: '#0a0400',
     },
-    package: 'com.yourname.marsweather',
+    package: 'com.yourname.earthwatch',
   },
   plugins: ['expo-router', 'expo-font'],
   experiments: {

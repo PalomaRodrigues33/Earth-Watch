@@ -89,13 +89,6 @@ export default function LayoutRaiz() {
             ),
           }}
         />
-
-        <Tabs.Screen
-          name="history"
-          options={{
-            href: null,
-          }}
-        />
       </Tabs>
     </View>
   );

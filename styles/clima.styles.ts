@@ -6,180 +6,142 @@ export const estilos = StyleSheet.create({
   scroll: { flex: 1 },
   conteudo: { paddingBottom: Spacing.xxl },
 
-  // Imagem de fundo
-  bgContainer: {
-    marginBottom: Spacing.md,
-  },
-  bgImagem: {
-    opacity: 0.35,
-  },
-  bgOverlay: {
+  containerBusca: {
     paddingHorizontal: Spacing.md,
     paddingTop: Spacing.md,
-    paddingBottom: Spacing.md,
-    backgroundColor: 'rgba(10, 4, 0, 0.6)',
-  },
-
-  // Cabeçalho
-  cabecalho: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    marginBottom: Spacing.lg,
-    marginTop: Spacing.sm,
-  },
-  cabecalhoEsquerda: {},
-  cabecalhoDireita: {
-    alignItems: 'flex-end',
+    paddingBottom: Spacing.sm,
     gap: Spacing.sm,
   },
-  rotuloSol: {
-    fontFamily: Typography.display,
-    color: Colors.textMuted,
-    fontSize: 9,
-    letterSpacing: 3,
-  },
-  numeroSol: {
-    fontFamily: Typography.display,
-    color: Colors.amber,
-    fontSize: 52,
-    lineHeight: 56,
-  },
-  dataTerra: {
-    fontFamily: Typography.body,
-    color: Colors.textSecondary,
-    fontSize: 12,
-    marginTop: 2,
-  },
-  chipAtmo: {
-    backgroundColor: Colors.bgElevated,
-    borderRadius: Radius.sm,
-    borderWidth: 1,
-    borderColor: Colors.rust,
-    paddingHorizontal: Spacing.sm,
-    paddingVertical: 4,
-  },
-  textoAtmo: {
-    fontFamily: Typography.display,
-    color: Colors.rust,
-    fontSize: 9,
-    letterSpacing: 2,
-  },
-
-  // Relógio marciano
-  cardRelogio: {
-    backgroundColor: 'rgba(20, 10, 2, 0.85)',
-    borderRadius: Radius.md,
-    borderWidth: 1,
-    borderColor: Colors.border,
-    padding: Spacing.md,
+  linhaBusca: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    gap: Spacing.sm,
     alignItems: 'center',
   },
-  relogioEsquerda: { flex: 1 },
-  rotuloRelogio: {
-    fontFamily: Typography.display,
-    color: Colors.textMuted,
-    fontSize: 8,
-    letterSpacing: 2,
-    marginBottom: 4,
-  },
-  horaRelogio: {
-    fontFamily: Typography.display,
-    color: Colors.amberLight,
-    fontSize: 32,
-    letterSpacing: 2,
-  },
-  subRelogio: {
-    fontFamily: Typography.body,
-    color: Colors.textMuted,
-    fontSize: 10,
-    marginTop: 4,
-  },
-  orbRelogio: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    backgroundColor: Colors.bgSubtle,
+  inputBusca: {
+    flex: 1,
+    backgroundColor: Colors.bgCard,
     borderWidth: 1,
     borderColor: Colors.border,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginLeft: Spacing.md,
+    borderRadius: Radius.sm,
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.sm,
+    fontFamily: Typography.body,
+    color: Colors.textPrimary,
+    fontSize: 15,
   },
-  emojiOrb: { fontSize: 24 },
-
-  // Temperatura
-  cardHero: {
+  botaoBusca: {
+    backgroundColor: Colors.rust,
+    borderRadius: Radius.sm,
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.sm,
+    justifyContent: 'center',
+  },
+  textoBotaoBusca: {
+    fontFamily: Typography.display,
+    color: Colors.textPrimary,
+    fontSize: 11,
+    letterSpacing: 1,
+  },
+  listaSugestoes: {
     backgroundColor: Colors.bgCard,
-    borderRadius: Radius.lg,
     borderWidth: 1,
-    borderColor: Colors.bgElevated,
-    padding: Spacing.lg,
-    marginBottom: Spacing.md,
-    marginHorizontal: Spacing.md,
+    borderColor: Colors.border,
+    borderRadius: Radius.sm,
     overflow: 'hidden',
   },
-  rotuloHero: {
-    fontFamily: Typography.display,
-    color: Colors.textMuted,
-    fontSize: 9,
-    letterSpacing: 2,
-    marginBottom: Spacing.md,
+  itemSugestao: {
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.sm,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.border,
   },
-  gradeTemp: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: Spacing.md,
-    gap: Spacing.lg,
+  nomeSugestao: {
+    fontFamily: Typography.bodyMedium,
+    color: Colors.textPrimary,
+    fontSize: 14,
   },
-  colunaTemp: { alignItems: 'flex-start' },
-  miniRotuloTemp: {
-    fontFamily: Typography.display,
-    color: Colors.textMuted,
-    fontSize: 8,
-    letterSpacing: 3,
-    marginBottom: 2,
-  },
-  tempMin: {
-    fontFamily: Typography.display,
-    color: Colors.dustLight,
-    fontSize: 36,
-    lineHeight: 40,
-  },
-  tempMax: {
-    fontFamily: Typography.display,
-    color: Colors.amberLight,
-    fontSize: 36,
-    lineHeight: 40,
-  },
-  tempF: {
+  subSugestao: {
     fontFamily: Typography.body,
     color: Colors.textSecondary,
     fontSize: 11,
-    marginTop: 2,
-  },
-  divisorTemp: {
-    width: 1,
-    height: 50,
-    backgroundColor: Colors.border,
-  },
-  orbHero: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    backgroundColor: Colors.rust,
-    opacity: 0.2,
-    marginLeft: 'auto',
-    shadowColor: Colors.rustLight,
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.8,
-    shadowRadius: 20,
-    elevation: 10,
+    marginTop: 1,
   },
 
-  // Grade de condições
+  cardHero: {
+    marginHorizontal: Spacing.md,
+    marginBottom: Spacing.sm,
+    borderRadius: Radius.lg,
+    overflow: 'hidden',
+  },
+  bgHero: { width: '100%' },
+  bgHeroImagem: { opacity: 0.25 },
+  overlayHero: {
+    backgroundColor: 'rgba(32, 39, 68, 0.7)',
+    padding: Spacing.lg,
+  },
+  cidadeTexto: {
+    fontFamily: Typography.display,
+    color: Colors.textPrimary,
+    fontSize: 22,
+    letterSpacing: 2,
+  },
+  paisTexto: {
+    fontFamily: Typography.body,
+    color: Colors.textSecondary,
+    fontSize: 13,
+    marginBottom: Spacing.md,
+  },
+  linhaHeroTopo: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+  },
+  emojiClimaGrande: { fontSize: 56, lineHeight: 64 },
+  blocoTempHero: { alignItems: 'flex-end' },
+  tempHero: {
+    fontFamily: Typography.display,
+    color: Colors.amber,
+    fontSize: 56,
+    lineHeight: 60,
+  },
+  descClimaHero: {
+    fontFamily: Typography.body,
+    color: Colors.textSecondary,
+    fontSize: 13,
+    textAlign: 'right',
+    marginTop: 2,
+  },
+  sensacaoHero: {
+    fontFamily: Typography.body,
+    color: Colors.textMuted,
+    fontSize: 12,
+    textAlign: 'right',
+  },
+  linhaMinMax: {
+    flexDirection: 'row',
+    gap: Spacing.lg,
+    marginTop: Spacing.md,
+  },
+  blocoMinMax: { alignItems: 'flex-start' },
+  rotuloMinMax: {
+    fontFamily: Typography.display,
+    color: Colors.textMuted,
+    fontSize: 7,
+    letterSpacing: 3,
+    marginBottom: 2,
+  },
+  valorMinMax: {
+    fontFamily: Typography.display,
+    fontSize: 20,
+  },
+  atualizadoEm: {
+    fontFamily: Typography.body,
+    color: Colors.textMuted,
+    fontSize: 10,
+    marginTop: Spacing.sm,
+    letterSpacing: 0.5,
+  },
+
   grade: {
     gap: Spacing.sm,
     marginBottom: Spacing.md,
@@ -188,77 +150,63 @@ export const estilos = StyleSheet.create({
   linhaGrade: { flexDirection: 'row', gap: Spacing.sm },
   celulaGrade: { flex: 1 },
 
-  // Atmosfera
-  cardAtmo: {
+  containerPrevisao: {
+    paddingHorizontal: Spacing.md,
+    marginBottom: Spacing.md,
+  },
+  cardPrevisao: {
     backgroundColor: Colors.bgCard,
     borderRadius: Radius.md,
     borderWidth: 1,
     borderColor: Colors.border,
-    padding: Spacing.md,
-    marginBottom: Spacing.md,
-    marginHorizontal: Spacing.md,
+    overflow: 'hidden',
   },
-  linhaAtmo: {
+  itemPrevisao: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 6,
+    paddingHorizontal: Spacing.md,
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.border,
+    gap: Spacing.sm,
   },
-  chaveAtmo: {
-    fontFamily: Typography.body,
-    color: Colors.textSecondary,
-    fontSize: 13,
+  itemPrevisaoUltimo: {
+    borderBottomWidth: 0,
   },
-  valorAtmo: {
+  dataPrevisao: {
     fontFamily: Typography.bodyMedium,
     color: Colors.textPrimary,
     fontSize: 13,
+    width: 90,
+    textTransform: 'capitalize',
   },
-  descAtmo: {
+  emojiPrevisao: { fontSize: 20, width: 30, textAlign: 'center' },
+  chuvaPrevisao: {
     fontFamily: Typography.body,
-    color: Colors.textMuted,
-    fontSize: 12,
-    lineHeight: 18,
-    fontStyle: 'italic',
-    marginTop: 2,
-    marginBottom: Spacing.xs,
-  },
-
-  // Botão histórico de sols
-  botaoSols: {
-    backgroundColor: Colors.bgCard,
-    borderRadius: Radius.md,
-    borderWidth: 1,
-    borderColor: Colors.border,
-    marginHorizontal: Spacing.md,
-    marginBottom: Spacing.md,
-    overflow: 'hidden',
-  },
-  botaoSolsConteudo: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: Spacing.md,
-    gap: Spacing.md,
-  },
-  botaoSolsIcone: { fontSize: 24 },
-  botaoSolsTextos: { flex: 1 },
-  botaoSolsTitulo: {
-    fontFamily: Typography.display,
-    color: Colors.textPrimary,
+    color: '#4fc3f7',
     fontSize: 11,
-    letterSpacing: 2,
+    width: 36,
+    textAlign: 'center',
   },
-  botaoSolsSub: {
+  tempsPrevisao: {
+    flexDirection: 'row',
+    gap: Spacing.sm,
+    marginLeft: 'auto' as any,
+    alignItems: 'center',
+  },
+  tempMinPrevisao: {
     fontFamily: Typography.body,
     color: Colors.textSecondary,
-    fontSize: 12,
-    marginTop: 3,
+    fontSize: 13,
+    width: 32,
+    textAlign: 'right',
   },
-  botaoSolsSeta: {
+  tempMaxPrevisao: {
     fontFamily: Typography.display,
-    color: Colors.amber,
-    fontSize: 28,
-    lineHeight: 32,
+    color: Colors.textPrimary,
+    fontSize: 13,
+    width: 32,
+    textAlign: 'right',
   },
 
   rodape: {
@@ -269,5 +217,29 @@ export const estilos = StyleSheet.create({
     letterSpacing: 0.5,
     marginTop: Spacing.sm,
     paddingHorizontal: Spacing.md,
+    marginBottom: Spacing.md,
+  },
+
+  estadoInicial: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: Spacing.xxl,
+    gap: Spacing.md,
+  },
+  emojiInicial: { fontSize: 64 },
+  tituloInicial: {
+    fontFamily: Typography.display,
+    color: Colors.textPrimary,
+    fontSize: 16,
+    letterSpacing: 2,
+    textAlign: 'center',
+  },
+  subInicial: {
+    fontFamily: Typography.body,
+    color: Colors.textSecondary,
+    fontSize: 13,
+    textAlign: 'center',
+    lineHeight: 20,
   },
 });

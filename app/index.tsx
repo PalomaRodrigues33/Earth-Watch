@@ -1,263 +1,271 @@
-import React, { useEffect, useState, useCallback, useRef } from "react";
+import React, { useState, useCallback } from 'react';
 import {
   View,
   Text,
   ScrollView,
-  RefreshControl,
-  Animated,
-  ImageBackground,
+  StyleSheet,
+  TextInput,
   TouchableOpacity,
-} from "react-native";
-import { estilos } from "@/styles/clima.styles";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useRouter } from "expo-router";
+  RefreshControl,
+  ImageBackground,
+  Keyboard,
+  ActivityIndicator,
+} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import {
-  fetchLatestSol,
-  SolWeather,
-  getMarsSeasonName,
-  formatEarthDate,
-  getAtmoDescription,
-  getMarsLocalTime,
-} from "@/services/maas2";
-import {
-  LoadingScreen,
-  ErrorScreen,
-  StatCard,
-  SectionHeader,
-  Divider,
-  Tag,
-  TempBar,
-} from "@/components/UI";
-import { Colors, Spacing, Radius, Typography } from "@/constants/theme";
+  buscarCidades,
+  fetchClimaAtual,
+  fetchPrevisao,
+  Cidade,
+  ClimaAtual,
+  PrevisaoDia,
+  direcaoVentoTexto,
+  emojiClima,
+  nivelUV,
+  formatarData,
+} from '@/services/openmeteo';
+import { StatCard, SectionHeader, Divider } from '@/components/UI';
+import { estilos } from '@/styles/clima.styles';
+import { Colors, Spacing, Radius, Typography } from '@/constants/theme';
 
-import BG_IMAGE from "@/assets/mars_bg.jpg";
+import BG_IMAGE from '@/assets/sky_bg.jpg';
 
 export default function TelaClima() {
-  const router = useRouter();
-  const [dados, setDados] = useState<SolWeather | null>(null);
-  const [carregando, setCarregando] = useState(true);
+  const [query, setQuery] = useState('');
+  const [sugestoes, setSugestoes] = useState<Cidade[]>([]);
+  const [buscando, setBuscando] = useState(false);
+  const [clima, setClima] = useState<ClimaAtual | null>(null);
+  const [previsao, setPrevisao] = useState<PrevisaoDia[]>([]);
+  const [carregando, setCarregando] = useState(false);
   const [atualizando, setAtualizando] = useState(false);
   const [erro, setErro] = useState<string | null>(null);
-  const [horaMarte, setHoraMarte] = useState("--:--:--");
-  const fadeAnim = useRef(new Animated.Value(0)).current;
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [cidadeAtual, setCidadeAtual] = useState<Cidade | null>(null);
 
-  const carregar = useCallback(async () => {
+  const aoDigitar = useCallback(async (texto: string) => {
+    setQuery(texto);
+    if (texto.trim().length < 2) { setSugestoes([]); return; }
+    setBuscando(true);
     try {
-      setErro(null);
-      const sol = await fetchLatestSol();
-      setDados(sol);
-      Animated.timing(fadeAnim, {
-        toValue: 1,
-        duration: 600,
-        useNativeDriver: true,
-      }).start();
-    } catch (e: any) {
-      setErro(e.message ?? "Falha ao conectar com a API da NASA");
+      const resultados = await buscarCidades(texto);
+      setSugestoes(resultados);
+    } catch {
+      setSugestoes([]);
     } finally {
-      setCarregando(false);
-      setAtualizando(false);
+      setBuscando(false);
     }
   }, []);
 
-  useEffect(() => {
-    const tick = () => setHoraMarte(getMarsLocalTime());
-    tick();
-    timerRef.current = setInterval(tick, 1000);
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
+  const selecionarCidade = useCallback(async (cidade: Cidade) => {
+    Keyboard.dismiss();
+    setSugestoes([]);
+    setQuery(`${cidade.nome}, ${cidade.pais}`);
+    setCidadeAtual(cidade);
+    setCarregando(true);
+    setErro(null);
+    try {
+      const [dadosClima, dadosPrevisao] = await Promise.all([
+        fetchClimaAtual(cidade),
+        fetchPrevisao(cidade),
+      ]);
+      setClima(dadosClima);
+      setPrevisao(dadosPrevisao);
+    } catch (e: any) {
+      setErro(e.message ?? 'Erro ao carregar clima');
+    } finally {
+      setCarregando(false);
+    }
   }, []);
 
-  useEffect(() => {
-    carregar();
-  }, [carregar]);
-
-  const aoAtualizar = () => {
+  const aoAtualizar = useCallback(async () => {
+    if (!cidadeAtual) return;
     setAtualizando(true);
-    fadeAnim.setValue(0);
-    carregar();
-  };
-
-  if (carregando)
-    return <LoadingScreen message="Contactando o rover Curiosity..." />;
-  if (erro)
-    return (
-      <ErrorScreen
-        error={erro}
-        onRetry={() => {
-          setCarregando(true);
-          carregar();
-        }}
-      />
-    );
-  if (!dados) return null;
-
-  const estacao = getMarsSeasonName(dados.ls);
+    try {
+      const [dadosClima, dadosPrevisao] = await Promise.all([
+        fetchClimaAtual(cidadeAtual),
+        fetchPrevisao(cidadeAtual),
+      ]);
+      setClima(dadosClima);
+      setPrevisao(dadosPrevisao);
+    } catch {}
+    finally { setAtualizando(false); }
+  }, [cidadeAtual]);
 
   return (
-    <SafeAreaView style={estilos.segura} edges={["top"]}>
+    <SafeAreaView style={estilos.segura} edges={['top']}>
       <ScrollView
         style={estilos.scroll}
-        contentContainerStyle={estilos.conteudo}
-        refreshControl={
-          <RefreshControl
-            refreshing={atualizando}
-            onRefresh={aoAtualizar}
-            tintColor={Colors.amber}
-            colors={[Colors.amber]}
-          />
-        }
+        contentContainerStyle={[
+          estilos.conteudo,
+          !clima && { flex: 1 },
+        ]}
+        keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
+        refreshControl={
+          cidadeAtual ? (
+            <RefreshControl
+              refreshing={atualizando}
+              onRefresh={aoAtualizar}
+              tintColor={Colors.amber}
+              colors={[Colors.amber]}
+            />
+          ) : undefined
+        }
       >
-        <Animated.View style={{ opacity: fadeAnim }}>
-
-          <ImageBackground
-            source={BG_IMAGE}
-            style={estilos.bgContainer}
-            imageStyle={estilos.bgImagem}
-            resizeMode="cover"
-          >
-            <View style={estilos.bgOverlay}>
-
-              <View style={estilos.cabecalho}>
-                <View style={estilos.cabecalhoEsquerda}>
-                  <Text style={estilos.rotuloSol}>SOL MARCIANO</Text>
-                  <Text style={estilos.numeroSol}>{dados.sol}</Text>
-                  <Text style={estilos.dataTerra}>
-                    {formatEarthDate(dados.terrestrial_date)} na Terra
-                  </Text>
-                </View>
-                <View style={estilos.cabecalhoDireita}>
-                  <View style={estilos.chipAtmo}>
-                    <Text style={estilos.textoAtmo}>
-                      {dados.atmo_opacity.toUpperCase()}
-                    </Text>
-                  </View>
-                  <Tag label={estacao} />
-                </View>
-              </View>
-
-              <View style={estilos.cardRelogio}>
-                <View style={estilos.relogioEsquerda}>
-                  <Text style={estilos.rotuloRelogio}>HORA LOCAL EM MARTE</Text>
-                  <Text style={estilos.horaRelogio}>{horaMarte}</Text>
-                  <Text style={estilos.subRelogio}>
-                    Cratera Gale · 137,4°E · Tempo Solar Local
-                  </Text>
-                </View>
-                <View style={estilos.orbRelogio}>
-                  <Text style={estilos.emojiOrb}>🌞</Text>
-                </View>
-              </View>
-            </View>
-          </ImageBackground>
-
-          <View style={estilos.cardHero}>
-            <Text style={estilos.rotuloHero}>TEMPERATURA</Text>
-            <View style={estilos.gradeTemp}>
-              <View style={estilos.colunaTemp}>
-                <Text style={estilos.miniRotuloTemp}>MÍN</Text>
-                <Text style={estilos.tempMin}>{dados.min_temp}°C</Text>
-                <Text style={estilos.tempF}>{dados.min_temp_fahrenheit}°F</Text>
-              </View>
-              <View style={estilos.divisorTemp} />
-              <View style={estilos.colunaTemp}>
-                <Text style={estilos.miniRotuloTemp}>MÁX</Text>
-                <Text style={estilos.tempMax}>{dados.max_temp}°C</Text>
-                <Text style={estilos.tempF}>{dados.max_temp_fahrenheit}°F</Text>
-              </View>
-              <View style={estilos.orbHero} />
-            </View>
-            <TempBar min={dados.min_temp} max={dados.max_temp} />
+        <View style={estilos.containerBusca}>
+          <View style={estilos.linhaBusca}>
+            <TextInput
+              style={estilos.inputBusca}
+              placeholder="Buscar cidade..."
+              placeholderTextColor={Colors.textMuted}
+              value={query}
+              onChangeText={aoDigitar}
+              returnKeyType="search"
+              selectionColor={Colors.amber}
+            />
+            {buscando && <ActivityIndicator color={Colors.amber} />}
           </View>
 
-          <Divider />
-
-          <SectionHeader
-            title="Condições"
-            subtitle="Cratera Gale · Planície de Elísio"
-          />
-          <View style={estilos.grade}>
-            <View style={estilos.linhaGrade}>
-              <StatCard
-                label="Pressão"
-                value={String(dados.pressure)}
-                unit="Pa"
-                icon="⬇"
-                style={estilos.celulaGrade}
-                accent
-              />
-              <StatCard
-                label="Índice UV"
-                value={dados.uv_index}
-                icon="☀"
-                style={estilos.celulaGrade}
-              />
+          {sugestoes.length > 0 && (
+            <View style={estilos.listaSugestoes}>
+              {sugestoes.map((c) => (
+                <TouchableOpacity
+                  key={c.id}
+                  style={estilos.itemSugestao}
+                  onPress={() => selecionarCidade(c)}
+                >
+                  <Text style={estilos.nomeSugestao}>{c.nome}</Text>
+                  <Text style={estilos.subSugestao}>{c.estado ? `${c.estado}, ` : ''}{c.pais}</Text>
+                </TouchableOpacity>
+              ))}
             </View>
-            <View style={estilos.linhaGrade}>
-              <StatCard
-                label="Nascer do Sol"
-                value={dados.sunrise}
-                icon="🌅"
-                style={estilos.celulaGrade}
-              />
-              <StatCard
-                label="Pôr do Sol"
-                value={dados.sunset}
-                icon="🌄"
-                style={estilos.celulaGrade}
-              />
-            </View>
-          </View>
+          )}
+        </View>
 
-          <Divider />
-
-          <SectionHeader
-            title="Atmosfera"
-            subtitle={`Longitude solar Ls ${dados.ls}°`}
-          />
-          <View style={estilos.cardAtmo}>
-            <View style={estilos.linhaAtmo}>
-              <Text style={estilos.chaveAtmo}>Condição do Céu</Text>
-              <Text style={estilos.valorAtmo}>{dados.atmo_opacity}</Text>
-            </View>
-            <Text style={estilos.descAtmo}>
-              {getAtmoDescription(dados.atmo_opacity)}
+        {!clima && !carregando && (
+          <View style={estilos.estadoInicial}>
+            <Text style={estilos.emojiInicial}>🌍</Text>
+            <Text style={estilos.tituloInicial}>PREVISÃO DO TEMPO</Text>
+            <Text style={estilos.subInicial}>
+              Digite o nome de uma cidade acima para ver as condições meteorológicas atuais.
             </Text>
-            <Divider style={{ marginVertical: Spacing.sm }} />
-            <View style={estilos.linhaAtmo}>
-              <Text style={estilos.chaveAtmo}>Estação em Marte</Text>
-              <Text style={estilos.valorAtmo}>{estacao}</Text>
-            </View>
-            <View style={estilos.linhaAtmo}>
-              <Text style={estilos.chaveAtmo}>Pressão</Text>
-              <Text style={estilos.valorAtmo}>{dados.pressure_string}</Text>
-            </View>
           </View>
+        )}
 
-          <TouchableOpacity
-            style={estilos.botaoSols}
-            onPress={() => router.push("/history")}
-            activeOpacity={0.75}
-          >
-            <View style={estilos.botaoSolsConteudo}>
-              <Text style={estilos.botaoSolsIcone}>📡</Text>
-              <View style={estilos.botaoSolsTextos}>
-                <Text style={estilos.botaoSolsTitulo}>HISTÓRICO DE SÓIS</Text>
-                <Text style={estilos.botaoSolsSub}>
-                  Ver os últimos 7 dias marcianos
-                </Text>
-              </View>
-              <Text style={estilos.botaoSolsSeta}>›</Text>
+        {carregando && (
+          <View style={estilos.estadoInicial}>
+            <ActivityIndicator size="large" color={Colors.amber} />
+            <Text style={[estilos.subInicial, { marginTop: Spacing.md }]}>
+              Obtendo dados meteorológicos...
+            </Text>
+          </View>
+        )}
+
+        {erro && !carregando && (
+          <View style={estilos.estadoInicial}>
+            <Text style={{ fontSize: 40 }}>⚠️</Text>
+            <Text style={[estilos.tituloInicial, { color: Colors.danger }]}>Erro</Text>
+            <Text style={estilos.subInicial}>{erro}</Text>
+          </View>
+        )}
+
+        {clima && !carregando && (
+          <>
+            <View style={estilos.cardHero}>
+              <ImageBackground
+                source={BG_IMAGE}
+                style={estilos.bgHero}
+                imageStyle={estilos.bgHeroImagem}
+                resizeMode="cover"
+              >
+                <View style={estilos.overlayHero}>
+                  <Text style={estilos.cidadeTexto}>{clima.cidade}</Text>
+                  <Text style={estilos.paisTexto}>{clima.pais}</Text>
+
+                  <View style={estilos.linhaHeroTopo}>
+                    <Text style={estilos.emojiClimaGrande}>
+                      {emojiClima(clima.codigoClima, clima.ehDia)}
+                    </Text>
+                    <View style={estilos.blocoTempHero}>
+                      <Text style={estilos.tempHero}>{clima.temperatura}°</Text>
+                      <Text style={estilos.descClimaHero}>{clima.descricaoClima}</Text>
+                      <Text style={estilos.sensacaoHero}>Sensação {clima.sensacaoTermica}°C</Text>
+                    </View>
+                  </View>
+
+                  <View style={estilos.linhaMinMax}>
+                    <View style={estilos.blocoMinMax}>
+                      <Text style={estilos.rotuloMinMax}>MÍN</Text>
+                      <Text style={[estilos.valorMinMax, { color: Colors.dustLight }]}>{clima.tempMin}°</Text>
+                    </View>
+                    <View style={estilos.blocoMinMax}>
+                      <Text style={estilos.rotuloMinMax}>MÁX</Text>
+                      <Text style={[estilos.valorMinMax, { color: Colors.amberLight }]}>{clima.tempMax}°</Text>
+                    </View>
+                  </View>
+
+                  <Text style={estilos.atualizadoEm}>
+                    Atualizado às {new Date(clima.horaAtualizacao).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}
+                  </Text>
+                </View>
+              </ImageBackground>
             </View>
-          </TouchableOpacity>
 
-          <Text style={estilos.rodape}>
-            Dados da NASA Curiosity REMS · mars.nasa.gov · Puxe para atualizar
-          </Text>
-        </Animated.View>
+            <Divider />
+
+            <SectionHeader
+              title="Condições Atuais"
+              subtitle={`${clima.cidade} · ${clima.latitude.toFixed(2)}°, ${clima.longitude.toFixed(2)}°`}
+            />
+            <View style={estilos.grade}>
+              <View style={estilos.linhaGrade}>
+                <StatCard label="Umidade"  value={`${clima.umidade}`}          unit="%"    icon="💧" style={estilos.celulaGrade} />
+                <StatCard label="Pressão"  value={`${clima.pressao}`}           unit="hPa"  icon="⬇" style={estilos.celulaGrade} accent />
+              </View>
+              <View style={estilos.linhaGrade}>
+                <StatCard label="Vento"    value={`${clima.velocidadeVento}`}   unit="km/h" icon="💨" style={estilos.celulaGrade} />
+                <StatCard label="Direção"  value={direcaoVentoTexto(clima.direcaoVento)}   icon="🧭" style={estilos.celulaGrade} />
+              </View>
+              <View style={estilos.linhaGrade}>
+                <StatCard label="Índice UV"      value={nivelUV(clima.uv)}             icon="☀️" style={estilos.celulaGrade} />
+                <StatCard label="Cobertura"      value={`${clima.nuvens}`}    unit="%"  icon="☁️" style={estilos.celulaGrade} />
+              </View>
+              <View style={estilos.linhaGrade}>
+                <StatCard label="Precipitação"   value={`${clima.precipitacao}`} unit="mm" icon="🌧" style={estilos.celulaGrade} />
+                <StatCard label="Visibilidade"   value={`${(clima.visibilidade / 1000).toFixed(1)}`} unit="km" icon="👁" style={estilos.celulaGrade} />
+              </View>
+            </View>
+
+            <Divider />
+
+            {previsao.length > 0 && (
+              <View style={estilos.containerPrevisao}>
+                <SectionHeader title="Previsão 7 Dias" />
+                <View style={estilos.cardPrevisao}>
+                  {previsao.map((dia, i) => (
+                    <View
+                      key={dia.data}
+                      style={[estilos.itemPrevisao, i === previsao.length - 1 && estilos.itemPrevisaoUltimo]}
+                    >
+                      <Text style={estilos.dataPrevisao}>{formatarData(dia.data)}</Text>
+                      <Text style={estilos.emojiPrevisao}>{emojiClima(dia.codigoClima, true)}</Text>
+                      <Text style={estilos.chuvaPrevisao}>{dia.chuvaProbabilidade}%</Text>
+                      <View style={estilos.tempsPrevisao}>
+                        <Text style={estilos.tempMinPrevisao}>{dia.tempMin}°</Text>
+                        <Text style={estilos.tempMaxPrevisao}>{dia.tempMax}°</Text>
+                      </View>
+                    </View>
+                  ))}
+                </View>
+              </View>
+            )}
+
+            <Text style={estilos.rodape}>
+              Open-Meteo · open-meteo.com · Puxe para atualizar
+            </Text>
+          </>
+        )}
       </ScrollView>
     </SafeAreaView>
   );
 }
+
